@@ -33,4 +33,17 @@ class CountryTimeTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($timeZones, array_keys($result));
     }
+
+    public function testCountryName()
+    {
+        $result = $this->country->get('Ukraine');
+
+        $timeZones = [
+            'Kiev',
+            'Uzhgorod',
+            'Zaporozhye',
+        ];
+
+        $this->assertEquals($timeZones, array_keys($result));
+    }
 }
