@@ -19,7 +19,7 @@ $config = [
 ];
 
 (new Bot($config))
-    ->onMessage(function (Request $request) {
+    ->onMessage(function (Request $request): Request {
         return (new Response())
             ->setChatId($request->getChatId())
             ->setText("Hello!");
