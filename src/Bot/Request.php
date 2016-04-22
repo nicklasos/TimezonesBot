@@ -1,19 +1,19 @@
 <?php
 namespace Bot;
 
-class InMessage
+class Request
 {
     private $text;
     private $chatId;
 
-    public function setText(string $text): InMessage
+    public function setText(string $text): Request
     {
         $this->text = $text;
 
         return $this;
     }
 
-    public function setChatId(string $chatId): InMessage
+    public function setChatId(string $chatId): Request
     {
         $this->chatId = $chatId;
 

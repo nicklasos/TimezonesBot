@@ -1,25 +1,33 @@
 <?php
 namespace Bot;
 
-use Telegram\Bot\Api;
-
 class Response
 {
-    /**
-     * @var Api
-     */
-    private $telegram;
+    private $text;
+    private $chatId;
 
-    public function __construct(Api $telegram)
+    public function getText(): string
     {
-        $this->telegram = $telegram;
+        return $this->text;
     }
 
-    public function send(OutMessage $message)
+    public function setText(string $text): Response
     {
-        $this->telegram->sendMessage([
-            'chat_id' => $message->getChatId(),
-            'text' => $message->getText(),
-        ]);
+        $this->text = $text;
+
+        return $this;
     }
+
+    public function getChatId(): string
+    {
+        return $this->chatId;
+    }
+
+    public function setChatId(string $chatId): Response
+    {
+        $this->chatId = $chatId;
+
+        return $this;
+    }
+
 }

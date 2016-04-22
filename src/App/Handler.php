@@ -2,71 +2,47 @@
 namespace App;
 
 use App\Exceptions\WrongCountryException;
-use Bot\InMessage;
-use Bot\OutMessage;
+use Bot\Request;
 use Bot\Response;
 
 class Handler
 {
-    /**
-     * @var InMessage
-     */
-    private $inMessage;
-
-    /**
-     * @var Response
-     */
-    private $response;
-
-    public function __construct(InMessage $inMessage, Response $response)
+    public function __invoke(Request $request): Response
     {
-        $this->inMessage = $inMessage;
-        $this->response = $response;
-    }
-
-    public function handle()
-    {
-        if (strpos($this->inMessage->getText(), '/start') === 0) {
-            $this->startMessage();
+        if (strpos($request->getText(), '/start') === 0) {
+            return $this->startMessage($request);
         } else {
-            $this->countryMessage();
+            return $this->countryMessage($request);
         }
     }
 
-    private function countryMessage()
+    private function countryMessage(Request $request): Response
     {
         $countryTime = new CountryTime();
 
-        $outMessage = new OutMessage();
-        $outMessage->setChatId($this->inMessage->getChatId());
+        $response = new Response();
+        $response->setChatId($request->getChatId());
 
-        $text = $this->inMessage->getText();
+        $text = $request->getText();
 
         try {
             $timeZones = $countryTime->get($text);
         } catch (WrongCountryException $e) {
 
-            $outMessage->setText('Sorry, country not found');
-            $this->response->send($outMessage);
-
-            return;
+            return $response->setText('Sorry, country not found');
         }
 
-        $outMessage->setText($this->formatTimeZones($timeZones));
-
-        $this->response->send($outMessage);
+        return $response->setText($this->formatTimeZones($timeZones));
     }
 
-    private function startMessage()
+    private function startMessage(Request $request): Response
     {
-        $text = "Hello! Send me country code and i'll send you time\n";
-        $text .= "For example: RU, GB, US";
+        $text = "Hello! Send me country or country code and i'll send you time\n" .
+            "For example: RU, GB, US, Ukraine, Poland";
 
-        $message = (new OutMessage())
-            ->setChatId($this->inMessage->getChatId())
+        return (new Response())
+            ->setChatId($request->getChatId())
             ->setText($text);
-
-        $this->response->send($message);
     }
 
     private function formatTimeZones(array $timeZones): string
