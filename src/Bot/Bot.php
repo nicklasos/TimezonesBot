@@ -47,7 +47,9 @@ class Bot
             $onMessage = $this->onMessage;
             $response = $onMessage($request);
 
-            $responseSender->send($response);
+            if ($response) {
+                $responseSender->send($response);
+            }
         }
     }
 }

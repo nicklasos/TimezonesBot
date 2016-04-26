@@ -6,6 +6,12 @@ class Response
     private $text;
     private $chatId;
 
+    public function __construct(string $chatId = null, string $text = null)
+    {
+        $this->chatId = $chatId;
+        $this->text = $text;
+    }
+
     public function getText(): string
     {
         return $this->text;

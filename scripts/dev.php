@@ -14,3 +14,4 @@ $config['telegram.mode'] = 'long-poling';
 (new Bot($config))
     ->onMessage(new Handler())
     ->run();
+
