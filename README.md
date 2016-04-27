@@ -20,7 +20,7 @@ $config = [
 
 (new Bot($config))
     ->onMessage(function (Request $request): Request {
-        return new Response($request->getChatId(), "Hello!");
+        return new Response("Hello!");
     })
     ->run();
 ```

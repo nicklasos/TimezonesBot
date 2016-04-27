@@ -6,9 +6,8 @@ class Response
     private $text;
     private $chatId;
 
-    public function __construct(string $chatId = null, string $text = null)
+    public function __construct(string $text = null)
     {
-        $this->chatId = $chatId;
         $this->text = $text;
     }
 

@@ -48,6 +48,10 @@ class Bot
             $response = $onMessage($request);
 
             if ($response) {
+                if (!$response->getChatId()) {
+                    $response->setChatId($request->getChatId());
+                }
+
                 $responseSender->send($response);
             }
         }
